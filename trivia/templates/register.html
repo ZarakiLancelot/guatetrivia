@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    GUATETRIVIA - SIGNUP
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <h1>REGISTRO</h1>
+        <form method="POST" class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+                <div class="input-group">
+                    <div class="input-group-text">@</div>
+                    {{ form.username( type="text", class="form-control", placeholder="Username", id="inlineFormInputGroupUsername") }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
