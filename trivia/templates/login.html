@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}
-    GUATETRIVIA - LOGIN
+    GuateTrivia - Ingresar
 {% endblock %}
 
 {% block content %}
+    <div class="login-main">
+        <div class="login-form">
+            <form method="POST" novalidate>
+                <div class="login-intro">
+                    <h1>Ingresar a  <br> GuateTrivia!</h1>
+                </div>
 
+                <div class="form-login">
+                    <p>¿Olvidaste tu contraseña?</p>
+                </div>
+                <div class="form-login">
+                    <p>¿Eres nuevo? <a href="{{ url_for('register') }}">¡Haz clic para Registrarte!</a></p>
+                </div>
+            </form>
+        </div>
+        <img src="{{ url_for('static', filename='images/guatetrivia_001.png') }}" class="login-img">
+    </div>
 {% endblock %}

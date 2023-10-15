@@ -1,20 +1,49 @@
 {% extends 'base.html' %}
 {% block title %}
-    GUATETRIVIA - SIGNUP
+    GuateTrivia - Registro
 {% endblock %}
 
 {% block content %}
-    <br>
-    <div class="container">
-        <h1>REGISTRO</h1>
-        <form method="POST" class="row row-cols-lg-auto g-3 align-items-center">
-            <div class="col-12">
-                <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
-                <div class="input-group">
-                    <div class="input-group-text">@</div>
-                    {{ form.username( type="text", class="form-control", placeholder="Username", id="inlineFormInputGroupUsername") }}
+    <div class="login-main">
+        <div class="login-form">
+            <form method="POST">
+                <div class="login-intro">
+                    <h1>¡Crea tu cuenta ahora!</h1>
                 </div>
-            </div>
-        </form>
+                <div class="col-auto">
+                    <label class="col-form-label-lg">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-text">👤</div>
+                        {{ form.username( type="text", class="form-control form-control-lg", placeholder="Username", id="inlineFormInputGroupUsername") }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="col-form-label-lg">Nombre</label>
+                    <div class="input-group">
+                        <div class="input-group-text">🔠</div>
+                        {{ form.nombre( type="text", class="form-control form-control-lg", placeholder="Pepito Pérez", id="nombre" ) }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="col-form-label-lg">Correo</label>
+                    <div class="input-group">
+                        <div class="input-group-text">✉️</div>
+                        {{ form.email( type="email", class="form-control form-control-lg", placeholder="correo@correo.com", id="email" ) }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="col-form-label-lg">Contraseña</label>
+                    <div class="input-group">
+                        <div class="input-group-text">🔑</div>
+                        {{ form.password( type="password", class="form-control form-control-lg", id="password" ) }}
+                    </div>
+                </div>
+
+                <div class="form-login">
+                    <p>¿Ya tienes usuario? <a href="{{ url_for('login') }}">¡Haz clic e Inicia Sesión!</a></p>
+                </div>
+            </form>
+        </div>
+        <img src="{{ url_for('static', filename='images/guatetrivia_002.png') }}" class="login-img">
     </div>
 {% endblock %}
