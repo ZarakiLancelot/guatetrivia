@@ -50,3 +50,9 @@
 .form-login p input{
     margin-left: 100px;
 }
+
+.dashboard-font {
+    background-color: #711DEF;
+    color: white;
+    font-family: Luckiest Guy, sans-serif;
+}
