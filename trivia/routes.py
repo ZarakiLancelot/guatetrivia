@@ -3,12 +3,17 @@ from flask import render_template, redirect, url_for, flash, get_flashed_message
 from trivia.forms import RegisterForm, LoginForm
 from trivia.models import User
 from trivia import db
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
 
 @app.route('/')
 def home_page():
     return render_template('home.html')
+
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -40,9 +45,16 @@ def login():
         if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
             login_user(attempted_user)
             flash(f'¡Éxito! Has iniciado sesión como {attempted_user.username}', category="success")
-            return redirect(url_for('home_page'))
+            return redirect(url_for('dashboard'))
         else:
             flash(f'El usuario y/o contraseña ingresados no concuerdan con ninguno registrado en el sistema,'
                   f'por favor intenta de nuevo', category="danger")
 
     return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash(f'Haz cerrado sesión correctamente', category='info')
+    return redirect(url_for('home_page'))

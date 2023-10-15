@@ -1,5 +1,4 @@
-from trivia import db, login_manager
-from trivia import bcrypt
+from trivia import bcrypt, db, login_manager
 from flask_login import UserMixin
 
 
@@ -28,4 +27,4 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
     def __repr__(self):
-        return f'User {self.username}'
+        return f'{self.username}'
