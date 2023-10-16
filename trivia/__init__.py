@@ -10,7 +10,9 @@ app.config['SECRET_KEY'] = '03c21eccc0c7ded351eacdaa'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = '/login'
+login_manager.login_view = 'login'
+login_manager.login_message = '¡Debes autenticarte para poder tener acceso a esta página!'
+login_manager.login_message_category = 'warning'
 
 
 def create_db():

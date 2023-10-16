@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, get_flashed_message
 from trivia.forms import RegisterForm, LoginForm
 from trivia.models import User
 from trivia import db
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 
 @app.route('/')
@@ -12,6 +12,7 @@ def home_page():
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 
@@ -27,6 +28,8 @@ def register():
                               password=form.password.data)
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
+        flash(f"¡Cuenta creada exitosamente Ya puedes ingresar como {user_to_create.username}!", category="success")
         return redirect(url_for('login'))
     if form.errors != {}:
         for err_msg in form.errors.values():
