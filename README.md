@@ -26,7 +26,7 @@ GuateTrivia es una aplicación web educativa que permite a los usuarios aprender
 
 5. **Inicia la Aplicación:**
    ```shell
-   python app.py
+   flask -A app.py run
 
 ## Uso
 
