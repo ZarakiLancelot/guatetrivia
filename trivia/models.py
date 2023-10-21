@@ -1,5 +1,6 @@
 from trivia import bcrypt, db, login_manager
 from flask_login import UserMixin
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -8,12 +9,15 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
     id = db.Column(db.Integer(), primary_key=True)
     nombre = db.Column(db.String(length=50), nullable=False)
     username = db.Column(db.String(length=20), nullable=False, unique=True)
     email = db.Column(db.String(length=50), nullable=False, unique=True)
     password_hash = db.Column(db.String(length=60), nullable=False)
     genero = db.Column(db.String(length=15), nullable=False)
+    fecha_nacimiento = db.Column(db.Date(), nullable=False)
+    avatar = db.Column(db.String(1024))
 
     @property
     def password(self):

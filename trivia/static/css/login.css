@@ -56,3 +56,7 @@
     color: white;
     font-family: Luckiest Guy, sans-serif;
 }
+
+.rounded-avatar {
+    border-radius: 50%;
+}

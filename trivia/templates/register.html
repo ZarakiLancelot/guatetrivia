@@ -6,51 +6,65 @@
 {% block content %}
     <div class="login-main">
         <div class="login-form">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
                 <div class="login-intro">
                     <h1>¡Crea tu cuenta ahora!</h1>
                 </div>
                 <div class="col-auto">
-                    {{ form.username.label( class="col-form-label-lg" ) }}
+                    {{ form.username.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">👤</div>
                         {{ form.username( type="text", class="form-control form-control-lg", placeholder="Username", id="username") }}
                     </div>
                 </div>
                 <div class="col-auto">
-                    {{ form.nombre.label( class="col-form-label-lg" ) }}
+                    {{ form.nombre.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">🔠</div>
                         {{ form.nombre( type="text", class="form-control form-control-lg", placeholder="Pepito Pérez", id="nombre" ) }}
                     </div>
                 </div>
                 <div class="col-auto">
-                    {{ form.email.label( class="col-form-label-lg" ) }}
+                    {{ form.email.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">✉️</div>
                         {{ form.email( type="email", class="form-control form-control-lg", placeholder="correo@correo.com", id="email" ) }}
                     </div>
                 </div>
                 <div class="col-auto">
-                    {{ form.genero.label( class="col-form-label-lg" ) }}
+                    {{ form.fecha_nacimiento.label( class="col-form-label-md" ) }}
+                    <div class="input-group">
+                        <div class="input-group-text">🗓️</div>
+                        {{ form.fecha_nacimiento( class="form-control form-control-lg", id="fecha_nacimiento" ) }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    {{ form.genero.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">👥</div>
                         {{ form.genero( class="form-control form-control-lg", id="genero" ) }}
                     </div>
                 </div>
                 <div class="col-auto">
-                    {{ form.password.label( class="col-form-label-lg" ) }}
+                    {{ form.password.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">🔑</div>
                         {{ form.password( type="password", class="form-control form-control-lg", id="password" ) }}
                     </div>
                 </div>
                 <div class="col-auto">
-                    {{ form.confirm_password.label( class="col-form-label-lg" ) }}
+                    {{ form.confirm_password.label( class="col-form-label-md" ) }}
                     <div class="input-group">
                         <div class="input-group-text">🔑</div>
                         {{ form.confirm_password( type="password", class="form-control form-control-lg", id="confirm_password" ) }}
+                    </div>
+                </div>
+                <div class="col-auto">
+                    {{ form.avatar.label( class="col-form-label-md" ) }}
+                    <div class="input-group">
+                        <div class="input-group-text">🖼</div>
+                        {{ form.avatar( type="file", class="form-control form-control-lg", id="avatar" ) }}
                     </div>
                 </div>
 

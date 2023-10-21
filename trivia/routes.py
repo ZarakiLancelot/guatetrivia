@@ -1,4 +1,7 @@
-from trivia import app
+import os
+
+from werkzeug.utils import secure_filename
+from trivia import app, ALLOWED_EXTENSIONS
 from flask import render_template, redirect, url_for, flash, get_flashed_messages
 from trivia.forms import RegisterForm, LoginForm
 from trivia.models import User
@@ -6,25 +9,45 @@ from trivia import db
 from flask_login import login_user, logout_user, login_required
 
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+##################################################################################################
+
+
 @app.route('/')
 def home_page():
     return render_template('home.html')
+##################################################################################################
 
 
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+##################################################################################################
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        if form.avatar.data:
+            avatar = form.avatar.data
+            if avatar and allowed_file(avatar.filename):
+                filename = secure_filename(avatar.filename)
+                avatar.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                avatar_url = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            else:
+                avatar_url = None
+        else:
+            avatar_url = None
+
         user_to_create = User(username=form.username.data,
                               nombre=form.nombre.data,
                               email=form.email.data,
                               genero=form.genero.data,
+                              fecha_nacimiento=form.fecha_nacimiento.data,
+                              avatar=avatar_url,
                               password=form.password.data)
         db.session.add(user_to_create)
         db.session.commit()
@@ -37,6 +60,7 @@ def register():
             flash(f'Hay errores al crear el usuario: {err_msg}', category='danger')
 
     return render_template('register.html', form=form)
+##################################################################################################
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -54,6 +78,7 @@ def login():
                   f'por favor intenta de nuevo', category="danger")
 
     return render_template('login.html', form=form)
+##################################################################################################
 
 
 @app.route('/logout')
@@ -61,3 +86,4 @@ def logout():
     logout_user()
     flash(f'Haz cerrado sesión correctamente', category='info')
     return redirect(url_for('home_page'))
+##################################################################################################
