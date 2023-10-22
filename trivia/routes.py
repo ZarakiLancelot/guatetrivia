@@ -1,8 +1,8 @@
 import os
 
 from werkzeug.utils import secure_filename
-from trivia import app, ALLOWED_EXTENSIONS
-from flask import render_template, redirect, url_for, flash, get_flashed_messages
+from trivia import app, ALLOWED_EXTENSIONS, BASE_DIR
+from flask import render_template, redirect, url_for, flash
 from trivia.forms import RegisterForm, LoginForm
 from trivia.models import User
 from trivia import db
@@ -11,12 +11,16 @@ from flask_login import login_user, logout_user, login_required
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 ##################################################################################################
 
 
 @app.route('/')
 def home_page():
     return render_template('home.html')
+
+
 ##################################################################################################
 
 
@@ -24,6 +28,8 @@ def home_page():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+
 ##################################################################################################
 
 
@@ -35,8 +41,11 @@ def register():
             avatar = form.avatar.data
             if avatar and allowed_file(avatar.filename):
                 filename = secure_filename(avatar.filename)
-                avatar.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                avatar_url = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                print("NOMBRE DEL ARCHIVO:")
+                print(filename)
+                path = os.path.join(BASE_DIR, 'static', 'images', 'avatar', filename)
+                avatar.save(os.path.relpath(path))
+                avatar_url = os.path.join('images', 'avatar', filename)
             else:
                 avatar_url = None
         else:
@@ -51,7 +60,6 @@ def register():
                               password=form.password.data)
         db.session.add(user_to_create)
         db.session.commit()
-        login_user(user_to_create)
         flash(f"¡Cuenta creada exitosamente Ya puedes ingresar como {user_to_create.username}!", category="success")
         return redirect(url_for('login'))
     if form.errors != {}:
@@ -60,6 +68,8 @@ def register():
             flash(f'Hay errores al crear el usuario: {err_msg}', category='danger')
 
     return render_template('register.html', form=form)
+
+
 ##################################################################################################
 
 
@@ -78,6 +88,8 @@ def login():
                   f'por favor intenta de nuevo', category="danger")
 
     return render_template('login.html', form=form)
+
+
 ##################################################################################################
 
 
