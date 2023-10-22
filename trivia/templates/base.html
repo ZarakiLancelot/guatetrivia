@@ -20,12 +20,12 @@
         <a class="navbar-brand" href="{{ url_for('home_page') }}">🇬🇹 GuateTrivia</a>
         <div class="d-flex flex-row align-items-center ms-auto me-3">
           {% if current_user.is_authenticated %}
-            <p class="nav-link me-2">Bienvenid{{ "o" if current_user.genero == "masculino" else "a" }}, {{ current_user.username }}</p>
+            <p class="nav-link me-2 pt-3">Bienvenid{{ "o" if current_user.genero == "masculino" else "a" }}, {{ current_user.username }}</p>
             <div class="d-flex align-items-center me-2">
               {% if current_user.avatar %}
-                <img src="{{ current_user.avatar }}" alt="Avatar del Usuario" width="48" class="rounded-avatar">
+                <img src="{{ url_for('static', filename=current_user.avatar) }}" alt="Avatar del Usuario" class="rounded-avatar">
               {% else %}
-                <img src="../static/images/avatar/avatar-default.png" alt="Avatar Default" width="48">
+                <img src="../static/images/avatar/avatar-default.png" alt="Avatar Default" class="rounded-avatar">
               {% endif %}
             </div>
           {% endif %}
