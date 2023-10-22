@@ -2,6 +2,10 @@
     background-color: #1E88F7 !important;
 }
 
+.menu-contextual {
+    background-color: #1E88F7;
+}
+
 .login-main {
     display: flex;
     justify-content: space-between;
@@ -61,4 +65,19 @@
     height: 48px;
     border-radius: 50%;
     width: 48px;
+}
+
+.account-img {
+  height: 200px;
+  width: 200px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+img.tq-width {
+    width: 75%;
+}
+
+img.half-width {
+    width: 50%;
 }
