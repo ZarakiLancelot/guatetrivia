@@ -1,11 +1,18 @@
 from trivia import bcrypt, db, login_manager
 from flask_login import UserMixin
-from datetime import datetime
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+class Medal(db.Model):
+    __tablename__ = 'medals'
+    id = db.Column(db.Integer(), primary_key=True)
+    nombre = db.Column(db.String(20), nullable=False)
+    descripcion = db.Column(db.String(200), nullable=True)
+    imagen = db.Column(db.String(200))
 
 
 class User(db.Model, UserMixin):
@@ -18,6 +25,7 @@ class User(db.Model, UserMixin):
     genero = db.Column(db.String(length=15), nullable=False)
     fecha_nacimiento = db.Column(db.Date(), nullable=False)
     avatar = db.Column(db.String(1024))
+    medals = db.relationship('Medal', secondary='user_medals', backref='users', lazy='dynamic')
 
     @property
     def password(self):
@@ -32,3 +40,8 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'{self.username}'
+
+
+class UserMedals(db.Model):
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), primary_key=True)
+    medal_id = db.Column(db.Integer(), db.ForeignKey('medals.id'), primary_key=True)

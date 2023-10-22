@@ -4,9 +4,9 @@ from werkzeug.utils import secure_filename
 from trivia import app, ALLOWED_EXTENSIONS, BASE_DIR
 from flask import render_template, redirect, url_for, flash
 from trivia.forms import RegisterForm, LoginForm
-from trivia.models import User
+from trivia.models import User, UserMedals
 from trivia import db
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 
 def allowed_file(filename):
@@ -27,7 +27,11 @@ def home_page():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    user = current_user
+    medals = UserMedals.query.filter_by(user_id=user.id).all()
+    print("MEDALLAS:")
+    print(medals)
+    return render_template('dashboard.html', user=user, medals=medals)
 
 
 ##################################################################################################
@@ -98,4 +102,12 @@ def logout():
     logout_user()
     flash(f'Haz cerrado sesión correctamente', category='info')
     return redirect(url_for('home_page'))
+
+
 ##################################################################################################
+
+
+@app.route('/trivias')
+@login_required
+def trivias():
+    return render_template('trivias.html')

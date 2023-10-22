@@ -4,6 +4,45 @@
 {% endblock %}
 
 {% block content %}
-    <br>
-    <h1>¡BIENVENIDO A GUATETRIVIA!</h1>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center dashboard-font">
+        <div class="col p-lg-5 mx-auto my-5">
+            <div class="content-section">
+                <div class="media">
+                    <img class="rounded-circle account-img" src="{{ url_for('static', filename=current_user.avatar) }}">
+                    <div class="media-body">
+                        <h1 class="display-4 font-weight-normal mt-5">Bienvenid{{ "o" if user.genero == "masculino" else "a" }}, {{ user.username }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="box-shadow p-3">
+                        <h2>Tus Medallas y Logros</h2>
+                        <img src="{{ url_for('static', filename='images/logros.png') }}" alt="Medallas y Logros" class="tq-width">
+                        {% if current_user.medals.count() > 0 %}
+                            <ul>
+                                {% for medal in current_user.medals %}
+                                    <li>
+                                        {{ medal.nombre }}
+                                        {{ medal.imagen }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="lead font-weight-normal">Aún no tienes medallas y/o logros. ¡Vamos, empecemos!</p>
+                            <a href="{{ url_for('trivias') }}" class="btn btn-primary">¡Juguémos!</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box-shadow p-3">
+                        <h2>Tu Ranking</h2>
+                        <img src="{{ url_for('static', filename='images/ranking.png') }}" alt="Ranking" class="half-width">
+                        <!-- Coloca aquí el código para mostrar el ranking del usuario -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
