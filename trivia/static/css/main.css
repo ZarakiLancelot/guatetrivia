@@ -1,5 +1,28 @@
+@font-face {
+    font-family: 'Luckiest Guy';
+    src: url("../fonts/LuckiestGuy-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Luckiest Guy, sans-serif !important;
+    padding-top: 70px;
+}
+
+.flash-messages {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 .navbar {
     background-color: #1E88F7 !important;
+}
+
+.fixed-size {
+    height: 72px;
 }
 
 .menu-contextual {
@@ -58,7 +81,7 @@
 .dashboard-font {
     background-color: #711DEF;
     color: white;
-    font-family: Luckiest Guy, sans-serif;
+    font-family: Luckiest Guy, sans-serif !important;
 }
 
 .rounded-avatar {

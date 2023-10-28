@@ -11,11 +11,11 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fonts/LuckiestGuy-Regular.ttf') }}">
   </head>
   <body>
-    <nav class="navbar bg-body-tertiary fixed-top">
+    <nav class="navbar bg-body-tertiary fixed-top fixed-size">
       <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('home_page') }}">🇬🇹 GuateTrivia</a>
         <div class="d-flex flex-row align-items-center ms-auto me-3">
@@ -59,14 +59,12 @@
       </div>
     </nav>
 
-    <br><br>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
+          <div class="alert alert-{{ category }} mt-lg-5 flash-messages">
             {{ message }}
-            <button type="button" class="m1-2 mb-1 btn-close" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <button type="button" class="m1-2 mb-1 btn-close mt-3" data-bs-dismiss="alert" aria-label="Close">
             </button>
           </div>
         {% endfor %}
