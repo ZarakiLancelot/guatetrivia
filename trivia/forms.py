@@ -3,9 +3,24 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, EmailField, SelectField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from trivia.models import User
+from password_strength import PasswordPolicy
 
 
 class RegisterForm(FlaskForm):
+    @staticmethod
+    def validate_password(self, password_field):
+        policy = PasswordPolicy.from_names(
+            length=8,
+            uppercase=1,
+            numbers=1,
+            special=1,
+            nonletters=0,
+        )
+        password = password_field.data
+        if not policy.test(password):
+            raise ValidationError('La contraseña debe contener al menos 8 caracteres,'
+                                  'una letra mayúscula, un número y un carácter especial.')
+
     @staticmethod
     def validate_username(self, username_to_check):
         user = User.query.filter_by(username=username_to_check.data).first()
