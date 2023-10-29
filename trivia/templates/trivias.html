@@ -4,4 +4,22 @@
 {% endblock %}
 
 {% block content %}
+    <div class="position-relative overflow-hidden text-center dashboard-font">
+        <div class="col p-lg-5 mx-auto my-5">
+            <div class="content-section">
+                <div class="pregunta">
+                    <h2>{{ pregunta_escogida.pregunta }}</h2>
+                    <form method="post" action="{{ url_for('verificar_respuesta') }}">
+                        {% for opcion, respuesta in pregunta_escogida.respuestas.items() %}
+                            <input type="radio" name="respuesta" value="{{ opcion }}"> {{ respuesta }}<br>
+                        {% endfor %}
+                        <input type="hidden" name="pregunta_actual" value="{{ pregunta_actual }}">
+                        <input type="hidden" name="preguntas" value="{{ preguntas }}">
+                        <input type="submit" value="Enviar respuesta">
+                    </form>
+                    <!-- <p>{{ preguntas }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

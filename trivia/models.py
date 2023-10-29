@@ -6,6 +6,8 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+##################################################################################################
+
 
 class Medal(db.Model):
     __tablename__ = 'medals'
@@ -13,6 +15,8 @@ class Medal(db.Model):
     nombre = db.Column(db.String(20), nullable=False)
     descripcion = db.Column(db.String(200), nullable=True)
     imagen = db.Column(db.String(200))
+
+##################################################################################################
 
 
 class User(db.Model, UserMixin):
@@ -41,7 +45,23 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'{self.username}'
 
+##################################################################################################
+
 
 class UserMedals(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), primary_key=True)
     medal_id = db.Column(db.Integer(), db.ForeignKey('medals.id'), primary_key=True)
+    fecha_obtencion = db.Column(db.Date(), nullable=False)
+
+##################################################################################################
+
+
+class Questions(db.Model):
+    __tablename__ = 'questions'
+    id = db.Column(db.Integer(), primary_key=True)
+    api_id = db.Column(db.Integer(), nullable=False)
+    pregunta = db.Column(db.String(length=500), nullable=False)
+    opcion_a = db.Column(db.String(length=200), nullable=False)
+    opcion_b = db.Column(db.String(length=200), nullable=False)
+    opcion_c = db.Column(db.String(length=200), nullable=False)
+    correcta = db.Column(db.String(length=1), nullable=False)

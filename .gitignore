@@ -1,3 +1,4 @@
-__pycache__/
+__pycache__/*
 .idea
 .idea/guatetrivia.iml
+trivia/__pycache__/*
