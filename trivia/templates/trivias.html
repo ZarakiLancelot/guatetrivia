@@ -8,14 +8,16 @@
         <div class="col p-lg-5 mx-auto my-5">
             <div class="content-section">
                 <div class="pregunta">
-                    <h2>{{ pregunta_escogida.pregunta }}</h2>
+                    <h2 class="display-2">{{ pregunta_escogida.pregunta }}</h2>
                     <form method="post" action="{{ url_for('verificar_respuesta') }}">
-                        {% for opcion, respuesta in pregunta_escogida.respuestas.items() %}
-                            <input type="radio" name="respuesta" value="{{ opcion }}"> {{ respuesta }}<br>
-                        {% endfor %}
+                        <div class="preguntas-font">
+                            {% for opcion, respuesta in pregunta_escogida.respuestas.items() %}
+                                <input type="radio" name="respuesta" value="{{ opcion }}"> {{ respuesta }}<br>
+                            {% endfor %}
+                        </div>
                         <input type="hidden" name="pregunta_actual" value="{{ pregunta_actual }}">
                         <input type="hidden" name="preguntas" value="{{ preguntas }}">
-                        <input type="submit" value="Enviar respuesta">
+                        <input type="submit" class="btn btn-primary" value="Enviar respuesta">
                     </form>
                     <!-- <p>{{ preguntas }}</p> -->
                 </div>

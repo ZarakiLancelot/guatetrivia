@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     fecha_nacimiento = db.Column(db.Date(), nullable=False)
     avatar = db.Column(db.String(1024))
     medals = db.relationship('Medal', secondary='user_medals', backref='users', lazy='dynamic')
+    puntos = db.Column(db.Integer(), default=0)
 
     @property
     def password(self):
@@ -51,7 +52,7 @@ class User(db.Model, UserMixin):
 class UserMedals(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), primary_key=True)
     medal_id = db.Column(db.Integer(), db.ForeignKey('medals.id'), primary_key=True)
-    fecha_obtencion = db.Column(db.Date(), nullable=False)
+    fecha_obtencion = db.Column(db.Date(), nullable=True)
 
 ##################################################################################################
 
