@@ -21,6 +21,7 @@ class PreguntasService:
                 preguntas = response.json()
                 if 'error' not in preguntas:
                     print(f"Las preguntas son: {preguntas}")
+                    self.guardar_en_bd(preguntas, pregunta_id)
                     preguntas_guardadas.append(preguntas)
                     pregunta_id += 1
                 else:
@@ -32,11 +33,12 @@ class PreguntasService:
 
         return preguntas_guardadas
 
-    def guardar_en_bd(self, pregunta_data):
+    def guardar_en_bd(self, pregunta_data, pregunta_id):
         nueva_pregunta = Questions(pregunta=pregunta_data['pregunta'],
-                                   opcion_a=pregunta_data['respuestas']['0'],
-                                   opcion_b=pregunta_data['respuestas']['1'],
-                                   opcion_c=pregunta_data['respuestas']['2'],
-                                   correcta=pregunta_data['respuestas']['3'])
+                                   opcion_a=pregunta_data['respuestas']['A'],
+                                   opcion_b=pregunta_data['respuestas']['B'],
+                                   opcion_c=pregunta_data['respuestas']['C'],
+                                   correcta=pregunta_data['respuestas']['correcta'],
+                                   api_id=pregunta_id)
         db.session.add(nueva_pregunta)
         db.session.commit()

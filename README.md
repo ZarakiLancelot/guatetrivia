@@ -39,9 +39,21 @@ GuateTrivia es una aplicación web educativa que permite a los usuarios aprender
 * __Dashboard Personalizado__: Los usuarios pueden ver su progreso y estadísticas en su dashboard personalizado.
 
 ## Capturas de Pantalla:
+Login:
+![login.png](trivia/static/images/screenshots/login.png)
 
-![img.png](trivia/static/images/img.png)
-![img_1.png](trivia/static/images/img_1.png)
+Registro:
+![signup.png](trivia/static/images/screenshots/signup.png)
+
+Home:
+![home.png](trivia/static/images/screenshots/home.png)
+
+Dashboard:
+![dashboard.png](trivia/static/images/screenshots/dashboard.png)
+
+Trivia:
+![trivia.png](trivia/static/images/screenshots/trivia.png)
+
 
 ## Contribuir
 

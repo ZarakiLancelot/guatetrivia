@@ -4,6 +4,7 @@ import os
 
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy.orm import load_only
 from werkzeug.utils import secure_filename
 from random import choice
 
