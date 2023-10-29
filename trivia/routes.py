@@ -1,12 +1,20 @@
+import json
+import ast
 import os
 
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
+from random import choice
+
 from trivia import app, ALLOWED_EXTENSIONS, BASE_DIR
-from flask import render_template, redirect, url_for, flash
+from trivia import db
 from trivia.forms import RegisterForm, LoginForm
 from trivia.models import User, UserMedals
-from trivia import db
-from flask_login import login_user, logout_user, login_required, current_user
+from trivia.services import PreguntasService
+
+
+pregunta_actual = 0
 
 
 def allowed_file(filename):
@@ -110,4 +118,49 @@ def logout():
 @app.route('/trivias')
 @login_required
 def trivias():
-    return render_template('trivias.html')
+    global pregunta_actual
+    base_url = 'http://3.135.193.178/preguntas.php?id='
+    servicio_trivia = PreguntasService(base_url)
+    preguntas = servicio_trivia.obtener_preguntas()
+
+    if preguntas:
+        # servicio_trivia.guardar_en_bd(pregunta_data)
+        pregunta = choice(range(len(preguntas)))
+        pregunta_escogida = preguntas[pregunta]
+        print(f"La pregunta elegida es: {pregunta_escogida}")
+        pregunta_formateada = {
+            'pregunta': pregunta_escogida['pregunta'],
+            'respuestas': {opcion: respuesta for opcion, respuesta in pregunta_escogida['respuestas'].items()
+                           if opcion != 'correcta'}
+        }
+        return render_template('trivias.html', pregunta_escogida=pregunta_formateada, preguntas=preguntas)
+    else:
+        return "ERROR al obtener la pregunta de la API"
+
+##################################################################################################
+
+
+@app.route('/verificar_respuesta', methods=['POST'])
+def verificar_respuesta():
+    global pregunta_actual
+
+    respuesta_usuario = request.form['respuesta']
+    pregunta_actual_id = pregunta_actual
+    pregunta_actual += 1
+    preguntas_json = request.form['preguntas']
+    preguntas_python = ast.literal_eval(preguntas_json)
+    preguntas_json_corregido = json.dumps(preguntas_python)
+    print(f"El JSON es: {preguntas_json_corregido}")
+    preguntas = json.loads(preguntas_json_corregido)
+
+    if pregunta_actual_id < len(preguntas):
+        siguiente_pregunta = preguntas[pregunta_actual_id]
+        pregunta_formateada = {
+            'pregunta': siguiente_pregunta['pregunta'],
+            'respuestas': {opcion: respuesta for opcion, respuesta in siguiente_pregunta['respuestas'].items()
+                           if opcion != 'correcta'}
+        }
+    else:
+        return redirect(url_for('dashboard'))
+
+    return render_template('trivias.html', pregunta_escogida=pregunta_formateada, preguntas=preguntas)
